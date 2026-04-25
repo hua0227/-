@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_PATH="build/macos/Build/Products/Release/physics_experiment_platform.app"
 DIST_DIR="dist/macos"
 DMG_PATH="${DIST_DIR}/physics-experiment-platform-macos.dmg"
+RELEASE_DIR="build/macos/Build/Products/Release"
+APP_PATH="${RELEASE_DIR}/物理实验竞赛虚仿平台.app"
 
 if [[ ! -d "${APP_PATH}" ]]; then
-  echo "Missing ${APP_PATH}. Run: flutter build macos --release" >&2
+  APP_PATH="$(find "${RELEASE_DIR}" -maxdepth 1 -name '*.app' -type d | head -n 1 || true)"
+fi
+
+if [[ ! -d "${APP_PATH}" ]]; then
+  echo "Missing release .app under ${RELEASE_DIR}. Run: flutter build macos --release" >&2
   exit 1
 fi
 
