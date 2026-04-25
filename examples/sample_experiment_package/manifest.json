@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "id": "drug_ce_low_eof_variant",
+  "title": "低电渗流条件下的药物离子分离示例包",
+  "version": "0.1.0",
+  "solverId": "advection_diffusion_1d",
+  "summary": "演示 .pexp 内容包如何复用内置一维对流-扩散求解器，改变电渗流和分析物参数生成新的教学场景。",
+  "authorLabel": "匿名实验包作者",
+  "tags": ["示例实验包", "毛细管电泳", "内容扩展"],
+  "parameters": [
+    {
+      "id": "voltageVolts",
+      "label": "分离电压",
+      "unit": "V",
+      "min": 5000,
+      "max": 30000,
+      "defaultValue": 12000,
+      "description": "低电渗流条件下可通过电压控制整体分析时间。"
+    },
+    {
+      "id": "electroosmoticMobility",
+      "label": "电渗迁移率",
+      "unit": "m2/(V s)",
+      "min": 5e-9,
+      "max": 6e-8,
+      "defaultValue": 1.2e-8,
+      "description": "模拟表面涂层或 pH 调节后电渗流降低的情况。"
+    }
+  ],
+  "presets": [
+    {
+      "name": "低电渗流",
+      "description": "观察弱酸性组分净迁移速度下降。",
+      "values": {
+        "voltageVolts": 12000,
+        "electroosmoticMobility": 1.2e-8,
+        "effectiveLengthCm": 45
+      }
+    }
+  ],
+  "references": [
+    {
+      "title": "Capillary Electrophoresis and Capillary Electrochromatography",
+      "source": "Chemistry LibreTexts",
+      "url": "https://chem.libretexts.org/Courses/Sewanee%3A_The_University_of_the_South/Instrumental_Analysis_%28CHEM_311%29/10%3A_Chromatographic_and_Electrophoretic_Methods/10.05%3A_Capillary_Electrophoresis_and_Capillary_Electrochromatography/10.5.03%3A_Capillary_Electrophoresis"
+    }
+  ],
+  "assets": [],
+  "model": {
+    "voltageVolts": 12000,
+    "capillaryLengthCm": 55,
+    "effectiveLengthCm": 45,
+    "innerDiameterUm": 50,
+    "electroosmoticMobility": 1.2e-8,
+    "bufferViscosityMPaS": 1.0,
+    "bufferConductivitySm": 0.07,
+    "injectionWidthMm": 0.8,
+    "temperatureC": 25,
+    "analytes": [
+      {
+        "id": "acid_drug",
+        "name": "酸性药物 D",
+        "colorHex": "#2563eb",
+        "electrophoreticMobility": -0.7e-8,
+        "diffusionCoefficient": 5.2e-10,
+        "relativeConcentration": 1.0,
+        "note": "低电渗流中迁移较慢。"
+      },
+      {
+        "id": "basic_degradant",
+        "name": "碱性降解物 E",
+        "colorHex": "#dc2626",
+        "electrophoreticMobility": 2.0e-8,
+        "diffusionCoefficient": 4.8e-10,
+        "relativeConcentration": 0.45,
+        "note": "用于模拟药学质量控制中的杂质峰。"
+      }
+    ]
+  }
+}
